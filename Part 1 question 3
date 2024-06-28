@@ -23,7 +23,7 @@ public class Main {
 	}
 }
 .............................................................................................
-Part1.Q3;
+
 
 public class Rectangle {
 	private double width;
