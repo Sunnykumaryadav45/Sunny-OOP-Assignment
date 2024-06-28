@@ -1,5 +1,5 @@
-part 2 question 4
-A
+
+//A
 // GeometricObject.java
 public abstract class GeometricObject implements Comparable<GeometricObject> {
     // Define fields, constructors, and methods relevant to geometric objects
@@ -83,7 +83,7 @@ public class ComparableCylinder extends Cylinder implements Comparable<Comparabl
     }
 }
 .............................................................................................................
-B
+//B
 // Colorable.java
 public interface Colorable {
     void howToColor();
