@@ -1,0 +1,132 @@
+part 2 question 4
+A
+// GeometricObject.java
+public abstract class GeometricObject implements Comparable<GeometricObject> {
+    // Define fields, constructors, and methods relevant to geometric objects
+    
+    @Override
+    public int compareTo(GeometricObject o) {
+        // Implement comparison logic based on area or other relevant criteria
+        // Assuming GeometricObject has a getArea() method
+        double thisArea = this.getArea();
+        double otherArea = o.getArea();
+        if (thisArea < otherArea) {
+            return -1;
+        } else if (thisArea > otherArea) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    
+    public static GeometricObject max(GeometricObject o1, GeometricObject o2) {
+        return (o1.compareTo(o2) >= 0) ? o1 : o2;
+    }
+}
+..................................................................................................
+
+// Circle.java
+public class Circle extends GeometricObject {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+    
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+}
+......................................................................................................
+
+// Cylinder.java
+public class Cylinder extends GeometricObject {
+    private double radius;
+    private double height;
+
+    public Cylinder(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+    
+    @Override
+    public double getArea() {
+        return 2 * Math.PI * radius * (radius + height);
+    }
+    
+    public double getVolume() {
+        return Math.PI * radius * radius * height;
+    }
+}
+
+............................................................................................................
+
+// ComparableCylinder.java
+public class ComparableCylinder extends Cylinder implements Comparable<ComparableCylinder> {
+
+    public ComparableCylinder(double radius, double height) {
+        super(radius, height);
+    }
+    
+    @Override
+    public int compareTo(ComparableCylinder o) {
+        double thisVolume = this.getVolume();
+        double otherVolume = o.getVolume();
+        if (thisVolume < otherVolume) {
+            return -1;
+        } else if (thisVolume > otherVolume) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+.............................................................................................................
+B
+// Colorable.java
+public interface Colorable {
+    void howToColor();
+}
+// Square.java
+public class Square extends GeometricObject implements Colorable {
+
+    @Override
+    public void howToColor() {
+        System.out.println("Color all four sides.");
+    }
+    
+    // Add necessary methods for Square
+}
+..................................................................................................................
+
+// TestProgram.java
+public class TestProgram {
+    public static void main(String[] args) {
+        // Testing max method with circles
+        Circle circle1 = new Circle(5);
+        Circle circle2 = new Circle(3);
+        
+        Circle largerCircle = (Circle) GeometricObject.max(circle1, circle2);
+        System.out.println("Larger circle area: " + largerCircle.getArea());
+        
+        // Testing max method with cylinders
+        Cylinder cylinder1 = new Cylinder(3, 5);
+        Cylinder cylinder2 = new Cylinder(2, 7);
+        
+        Cylinder largerCylinder = (Cylinder) GeometricObject.max(cylinder1, cylinder2);
+        System.out.println("Larger cylinder volume: " + largerCylinder.getVolume());
+        
+        // Testing ComparableCylinder
+        ComparableCylinder compCylinder1 = new ComparableCylinder(3, 5);
+        ComparableCylinder compCylinder2 = new ComparableCylinder(2, 7);
+        
+        ComparableCylinder largerCompCylinder = GeometricObject.max(compCylinder1, compCylinder2);
+        System.out.println("Larger comparable cylinder volume: " + largerCompCylinder.getVolume());
+        
+        // Testing Square implementing Colorable
+        Square square = new Square();
+        square.howToColor();
+    }
+}
+
